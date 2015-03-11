@@ -1,34 +1,59 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" NeoBundle
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
 
+"set rtp+=~/.vim/bundle/vundle/
+"call vundle#rc()
 " Let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+"Bundle 'gmarik/vundle'
 
 " My Bundles
-Bundle 'tpope/vim-sensible'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-endwise'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
-Bundle 'kien/ctrlp.vim'
-Bundle 'rking/ag.vim'
-Bundle 'kana/vim-textobj-user'
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle 'slim-template/vim-slim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'ervandew/supertab'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-dispatch'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'mac' : 'make -f make_mac.mak',
+\    },
+\ }
+NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'tpope/vim-sensible'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rake'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'Lokaltog/vim-powerline'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
+NeoBundle 'slim-template/vim-slim'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'vim-scripts/dbext.vim'
+NeoBundle 'mhinz/vim-signify'
+"NeoBundle 'Shougo/unite.vim' " Try it on a faster computer
+" Clojure
+NeoBundle 'guns/vim-clojure-static'
+NeoBundle 'tpope/vim-fireplace'
+NeoBundle 'cemerick/austin'
+
+call neobundle#end()
 
 syntax enable
 filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
 
 let mapleader = ","
 
@@ -67,12 +92,19 @@ set smartcase
 
 set guioptions+=c
 
-" edit file in current dir
-nnoremap <leader>ew :e %:p:h
+" Some helpers to edit mode
+" http://vimcasts.org/e/14
+nmap <leader>ew :e <C-R>=expand('%:h').'/'<cr>
+nmap <leader>es :sp <C-R>=expand('%:h').'/'<cr>
+nmap <leader>ev :vsp <C-R>=expand('%:h').'/'<cr>
+nmap <leader>et :tabe <C-R>=expand('%:h').'/'<cr>
+
+" find merge conflict markers
+nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
 
 nnoremap <C-å> <C-]>
-" Auto save files on losing focus
-au FocusLost * :wa
+" Auto save files on losing focus ignore unamed buffers
+:au FocusLost * silent! wa
 " Auto reload files
 au SwapExists * let v:swapchoice = 'e'
 
@@ -104,15 +136,37 @@ if executable('ag')
   " ag is fast enough to CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-":autocmd FileType qf wincmd J
-" define Ag command to search for provided text and open a "quickfix" window
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|botright cwindow|redraw!
 
 nnoremap <leader>a :Ag 
+
 "map leader c to close quickfix window
 nnoremap <leader>cc :ccl<CR>
+
+" open tabs with <cmd-N>
+map  <D-0> 0gt
+imap <D-0> <Esc>0gt
+map  <D-1> 1gt
+imap <D-1> <Esc>1gt
+map  <D-2> 2gt
+imap <D-2> <Esc>2gt
+map  <D-3> 3gt
+imap <D-3> <Esc>3gt
+map  <D-4> 4gt
+imap <D-4> <Esc>4gt
+map  <D-5> 5gt
+imap <D-5> <Esc>5gt
+map  <D-6> 6gt
+imap <D-6> <Esc>6gt
+map  <D-7> 7gt
+imap <D-7> <Esc>7gt
+map  <D-8> 8gt
+imap <D-8> <Esc>8gt
+map  <D-9> 9gt
+imap <D-9> <Esc>9gt
+
+map <D-t> :CtrlP<cr>
+imap <D-t> <esc>:CtrlP<cr>
 
 nnoremap € $
 vnoremap € $

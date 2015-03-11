@@ -5,5 +5,7 @@ set guioptions-=T                 " Hide toolbar.
 set lines=64 columns=255          " Window dimensions.
 
 set guioptions-=r                 " Don't show right scrollbar
-"color molokai
-"colorscheme railscasts
+
+if has("gui_macvim")
+  macmenu &File.New\ Tab key=<nop>
+endif
