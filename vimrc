@@ -45,11 +45,18 @@ NeoBundle 'mhinz/vim-signify'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'cemerick/austin'
+" Elixir
+NeoBundle 'elixir-lang/vim-elixir'
 
 call neobundle#end()
 
 syntax enable
 filetype plugin indent on
+
+" git signify
+let g:signify_vcs_list = [ 'git' ]
+nmap <leader>gj <plug>(signify-next-hunk)
+nmap <leader>gk <plug>(signify-prev-hunk)
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
@@ -75,7 +82,7 @@ set expandtab
 set modelines=0
 set shiftwidth=2
 set clipboard=unnamed
-set synmaxcol=128
+set synmaxcol=200
 set ttyfast
 set lazyredraw
 set ttyscroll=3
@@ -110,7 +117,10 @@ au SwapExists * let v:swapchoice = 'e'
 
 set background=dark
 colorscheme my-rails-casts
-"color jellybeans
+" switch to light colorscheme
+nnoremap <leader>li :set background=light<cr>:colorscheme solarized<cr>
+" switch back to dark
+nnoremap <leader>da :set background=dark<cr>:colorscheme my-rails-casts<cr>
 
 " allow switching from changed buffers
 set hidden
@@ -168,11 +178,12 @@ imap <D-9> <Esc>9gt
 map <D-t> :CtrlP<cr>
 imap <D-t> <esc>:CtrlP<cr>
 
-nnoremap € $
-vnoremap € $
+map € $
 
 " Search for tag under cursor
 nnoremap <leader>t <C-]>
+" rebuild ctags
+nnoremap <leader>ct :!ctags -R .<cr>
 
 " tab completion settings
 set wildmode=longest,list:longest
