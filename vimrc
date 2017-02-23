@@ -7,18 +7,9 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"set rtp+=~/.vim/bundle/vundle/
-"call vundle#rc()
-" Let Vundle manage Vundle
-"Bundle 'gmarik/vundle'
-
 " My Bundles
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'mac' : 'make -f make_mac.mak',
-\    },
-\ }
-NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
+" NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'tpope/vim-sensible'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-rails'
@@ -33,10 +24,10 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'slim-template/vim-slim'
-NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'skywind3000/asyncrun.vim'
 NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'mhinz/vim-signify'
@@ -47,6 +38,19 @@ NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'cemerick/austin'
 " Elixir
 NeoBundle 'elixir-lang/vim-elixir'
+" Scala
+NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'ktvoelker/sbt-vim'
+" Elm
+NeoBundle 'lambdatoast/elm.vim'
+" Javascript
+NeoBundle 'othree/yajs.vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
+NeoBundle 'moll/vim-node'
+NeoBundle 'elzr/vim-json'
+
+NeoBundle 'tfnico/vim-gradle'
 
 call neobundle#end()
 
@@ -82,7 +86,7 @@ set expandtab
 set modelines=0
 set shiftwidth=2
 set clipboard=unnamed
-set synmaxcol=200
+set synmaxcol=400
 set ttyfast
 set lazyredraw
 set ttyscroll=3
@@ -114,9 +118,12 @@ nnoremap <C-å> <C-]>
 :au FocusLost * silent! wa
 " Auto reload files
 au SwapExists * let v:swapchoice = 'e'
+" treat .es6 as .js
+au BufNewFile,BufRead *.es6 set filetype=javascript
 
 set background=dark
-colorscheme my-rails-casts
+" colorscheme my-rails-casts
+colorscheme codeschool
 " switch to light colorscheme
 nnoremap <leader>li :set background=light<cr>:colorscheme solarized<cr>
 " switch back to dark
@@ -183,7 +190,7 @@ map € $
 " Search for tag under cursor
 nnoremap <leader>t <C-]>
 " rebuild ctags
-nnoremap <leader>ct :!ctags -R .<cr>
+nnoremap <leader>ct :!/usr/local/bin/ctags -R .<cr>
 
 " tab completion settings
 set wildmode=longest,list:longest

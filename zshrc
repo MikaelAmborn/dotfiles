@@ -5,7 +5,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="mamborn"
+#ZSH_THEME="mamborn"
+ZSH_THEME="ys"
 
 # Example aliases
 alias zshconfig="mvim ~/.zshrc"
@@ -40,7 +41,7 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git bundler)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -49,31 +50,40 @@ export PAGER=less
 export LESS=-R
 export LC_CTYPE=sv_SE.UTF-8
 export EDITOR=mvim
-export VISUAL=/Users/ma/bin/mvim_fg.sh
+export VISUAL="mvim -f"
 
 local smiley="%(?,%{$fg[green]%}☺%{$reset_color%},%{$fg[red]%}☹%{$reset_color%})"
 PROMPT='%{$fg[blue]%}%~%{$reset_color%}
 ${smiley} %{$reset_color%}'
 
-RPROMPT='%{$fg[white]%} $(~/.rvm/bin/rvm-prompt i v p)$(git_prompt_info)%{$reset_color%}'
+#RPROMPT='%{$fg[white]%} $(~/.rvm/bin/rvm-prompt i v p)$(git_prompt_info)%{$reset_color%}'
+RPROMPT='%{$fg[white]%} $(git_prompt_info)%{$reset_color%}'
 
-PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/local/heroku/bin:/Users/ma/bin:/usr/local/share/npm/bin
+export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+export MAVEN_OPTS='-Xms256m -Xmx1024m -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.awt.headless=true'
+
+PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/local/heroku/bin:/Users/ma/bin:/usr/local/share/npm/bin:$PATH:~/bin
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 alias g='git'
 alias gms='git merge --squash'
-alias h='heroku'
-alias halog='heroku logs -t -a alpha-publish'
-alias hblog='heroku logs -t -a beta-publish'
-alias hc='heroku run console -a magplus-publish'
-alias hca='heroku run console -a alpha-publish'
-alias hcb='heroku run console -a beta-publish'
-alias hcg='heroku run console -a gamma-publish'
-alias heroku='nocorrect heroku '
-alias hglog='heroku logs -t -a gamma-publish'
-alias hlog='heroku logs -t -a magplus-publish'
-alias hslog='heroku logs -t -a magplus-staging'
 alias agr="alias | grep"
 alias gcah='git commit --amend -C HEAD'
 alias grb='git rebase'
+git_last_ticket() {
+  git --no-pager log -1 --pretty=oneline | awk -F ' ' '{printf $2}' | pbcopy
+}
+
+export LSCOLORS="Exfxcxdxbxegedabagacad"
+
+# Docker
+#docker-machine start default 1>/dev/null
+#eval "$(docker-machine env default)"
+alias docker_stop='docker stop $(docker ps -a -q)'
+alias docker_rm='docker rm $(docker ps -a -q)'
+alias docker_image_clean='docker rmi $(docker images -q)'
+export HOMEBREW_GITHUB_API_TOKEN="160cf5692209ee98b6ce8f627255cbaf408c6582"
+
+alias tmux="TERM=screen-256color-bce tmux"
+export PATH="$PATH:`yarn global bin`"
