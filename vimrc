@@ -1,58 +1,107 @@
-set nocompatible
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=/Users/mikael.amborn/.vim/bundle/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/Users/mikael.amborn/.vim/bundle')
+  call dein#begin('/Users/mikael.amborn/.vim/bundle')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('/Users/mikael.amborn/.vim/bundle/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here:
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  " My Bundles
+  call dein#add('tpope/vim-sensible')
+  call dein#add('tpope/vim-surround')
+  call dein#add('tpope/vim-rails')
+  call dein#add('tpope/vim-rake')
+  call dein#add('tpope/vim-endwise')
+  call dein#add('nanotech/jellybeans.vim')
+  call dein#add('Lokaltog/vim-powerline')
+  call dein#add('scrooloose/syntastic')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('rking/ag.vim')
+  call dein#add('kana/vim-textobj-user')
+  call dein#add('nelstrom/vim-textobj-rubyblock')
+  call dein#add('slim-template/vim-slim')
+  call dein#add('ervandew/supertab')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-dispatch')
+  call dein#add('flazz/vim-colorschemes')
+  call dein#add('vim-scripts/dbext.vim')
+  call dein#add('mhinz/vim-signify')
+  "call dein#add('Shougo/unite.vim' " Try it on a faster computer
+  " Clojure
+  call dein#add('guns/vim-clojure-static')
+  call dein#add('tpope/vim-fireplace')
+  call dein#add('cemerick/austin')
+  call dein#add('guns/vim-sexp')
+  call dein#add('tpope/vim-sexp-mappings-for-regular-people')
+  call dein#add('roxma/nvim-completion-manager')
+
+  " Elixir
+  call dein#add('elixir-lang/vim-elixir')
+  " Scala
+  call dein#add('derekwyatt/vim-scala')
+  " call dein#add('ktvoelker/sbt-vim')
+  " Elm
+  call dein#add('lambdatoast/elm.vim')
+  " Javascript
+  call dein#add('othree/yajs.vim')
+  call dein#add('pangloss/vim-javascript')
+  call dein#add('mxw/vim-jsx')
+  call dein#add('moll/vim-node')
+  call dein#add('elzr/vim-json')
+
+  call dein#add('tfnico/vim-gradle')
+  " Vim only plugins
+  if !has('nvim')
+    call dein#add('Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } })
+    call dein#add('skywind3000/asyncrun.vim')
+  endif
+  " Neovim only plugins
+  if has('nvim')
+    call dein#add('Shougo/deoplete.nvim')
+    call dein#add('clojure-vim/async-clj-omni')
+    call dein#add('neovim/node-host')
+    " call dein#add('snoe/nvim-parinfer.js')
+    " call dein#add('snoe/clj-refactor.nvim')
+  endif
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+"End dein Scripts-------------------------
+
 filetype off
 
 " NeoBundle
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
+" set runtimepath+=~/.vim/bundle/neobundle.vim/
+"call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+" NeoBundleFetch 'Shougo/neobundle.vim'
 
-" My Bundles
-NeoBundle 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
-" NeoBundle 'Shougo/vimproc.vim'
-NeoBundle 'tpope/vim-sensible'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-rake'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'Lokaltog/vim-powerline'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
-NeoBundle 'slim-template/vim-slim'
-NeoBundle 'ervandew/supertab'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'skywind3000/asyncrun.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'vim-scripts/dbext.vim'
-NeoBundle 'mhinz/vim-signify'
-"NeoBundle 'Shougo/unite.vim' " Try it on a faster computer
-" Clojure
-NeoBundle 'guns/vim-clojure-static'
-NeoBundle 'tpope/vim-fireplace'
-NeoBundle 'cemerick/austin'
-" Elixir
-NeoBundle 'elixir-lang/vim-elixir'
-" Scala
-NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'ktvoelker/sbt-vim'
-" Elm
-NeoBundle 'lambdatoast/elm.vim'
-" Javascript
-NeoBundle 'othree/yajs.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'moll/vim-node'
-NeoBundle 'elzr/vim-json'
 
-NeoBundle 'tfnico/vim-gradle'
-
-call neobundle#end()
+" call neobundle#end()
 
 syntax enable
 filetype plugin indent on
@@ -64,7 +113,7 @@ nmap <leader>gk <plug>(signify-prev-hunk)
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
-NeoBundleCheck
+" NeoBundleCheck
 
 let mapleader = ","
 
@@ -89,7 +138,9 @@ set clipboard=unnamed
 set synmaxcol=400
 set ttyfast
 set lazyredraw
-set ttyscroll=3
+if !has('nvim')
+  set ttyscroll=3
+endif
 set encoding=utf-8
 set tabstop=2
 set nowrap
@@ -198,9 +249,6 @@ set wildmode=longest,list:longest
 set splitright
 set splitbelow
 
-nnoremap <leader>cr :CoffeeRun<cr>
-vnoremap <leader>cr :CoffeeRun<cr>
-
 " Run file with rspec using tpope's Dispatch plugin
 nnoremap <leader>r :Dispatch rspec %<cr>
 
@@ -208,6 +256,13 @@ nnoremap <leader>r :Dispatch rspec %<cr>
 nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg']
+
+" Deoplete
+if has('nvim')
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#keyword_patterns = {}
+  let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+endif
 
 " Syntastic
 "let g:syntastic_mode_map = { 'mode': 'passive' }
