@@ -66,6 +66,7 @@ PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/local/heroku/bin:/Users/ma/bin:/u
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
+# Git aliases
 alias g='git'
 alias gms='git merge --squash'
 alias agr="alias | grep"
@@ -74,6 +75,7 @@ alias grb='git rebase'
 git_last_ticket() {
   git --no-pager log -1 --pretty=oneline | awk -F ' ' '{printf $2}' | pbcopy
 }
+alias gsc='f() { git clone ssh://git@stash.int.klarna.net:7999/$1/$2.git };f'
 
 export LSCOLORS="Exfxcxdxbxegedabagacad"
 
@@ -87,3 +89,4 @@ export HOMEBREW_GITHUB_API_TOKEN="160cf5692209ee98b6ce8f627255cbaf408c6582"
 
 alias tmux="TERM=screen-256color-bce tmux"
 export PATH="$PATH:`yarn global bin`"
+export PATH=$PATH:/usr/local/opt/go/libexec/bin:~/bin
