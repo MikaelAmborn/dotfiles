@@ -9,8 +9,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " My Bundles
 NeoBundle 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
-" NeoBundle 'Shougo/vimproc.vim'
-NeoBundle 'tpope/vim-sensible'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
@@ -29,6 +27,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'skywind3000/asyncrun.vim'
 NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'morhetz/gruvbox'
 NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'mhinz/vim-signify'
 "NeoBundle 'Shougo/unite.vim' " Try it on a faster computer
@@ -36,11 +35,13 @@ NeoBundle 'mhinz/vim-signify'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'cemerick/austin'
+NeoBundle 'guns/vim-sexp'
+NeoBundle 'tpope/vim-sexp-mappings-for-regular-people'
 " Elixir
 NeoBundle 'elixir-lang/vim-elixir'
 " Scala
 NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'ktvoelker/sbt-vim'
+"NeoBundle 'ktvoelker/sbt-vim'
 " Elm
 NeoBundle 'lambdatoast/elm.vim'
 " Javascript
@@ -51,6 +52,22 @@ NeoBundle 'moll/vim-node'
 NeoBundle 'elzr/vim-json'
 
 NeoBundle 'tfnico/vim-gradle'
+
+if !has('nvim')
+  NeoBundle 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
+  NeoBundle 'skywind3000/asyncrun.vim'
+  NeoBundle 'Shougo/neocomplete.vim'
+  NeoBundle 'tpope/vim-sensible'
+endif
+" Neovim only plugins
+if has('nvim')
+  NeoBundle 'Shougo/deoplete.nvim'
+  NeoBundle 'clojure-vim/async-clj-omni'
+  NeoBundle 'neovim/node-host'
+  NeoBundle 'roxma/nvim-completion-manager'
+  NeoBundle 'snoe/nvim-parinfer.js'
+  "NeoBundle 'snoe/clj-refactor.nvim'
+endif
 
 call neobundle#end()
 
@@ -89,7 +106,9 @@ set clipboard=unnamed
 set synmaxcol=400
 set ttyfast
 set lazyredraw
-set ttyscroll=3
+if !has('nvim')
+  set ttyscroll=3
+endif
 set encoding=utf-8
 set tabstop=2
 set nowrap
@@ -100,6 +119,7 @@ set nobackup
 set hlsearch
 set ignorecase
 set smartcase
+set termguicolors
 
 set guioptions+=c
 
@@ -123,7 +143,8 @@ au BufNewFile,BufRead *.es6 set filetype=javascript
 
 set background=dark
 " colorscheme my-rails-casts
-colorscheme codeschool
+"colorscheme codeschool
+colorscheme gruvbox
 " switch to light colorscheme
 nnoremap <leader>li :set background=light<cr>:colorscheme solarized<cr>
 " switch back to dark
@@ -136,7 +157,7 @@ set hidden
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 " clear previous search with ,<space>
-nnoremap <leader><space> :noh<cr>  
+nnoremap <leader><space> :noh<cr>
 " make tab match bracket pairs, useful for moving
 "nnoremap <tab> %
 "vnoremap <tab> %
@@ -155,7 +176,7 @@ if executable('ag')
 endif
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|botright cwindow|redraw!
 
-nnoremap <leader>a :Ag 
+nnoremap <leader>a :Ag
 
 "map leader c to close quickfix window
 nnoremap <leader>cc :ccl<CR>
@@ -212,3 +233,11 @@ let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg']
 " Syntastic
 "let g:syntastic_mode_map = { 'mode': 'passive' }
 "let g:syntastic_ruby_exec = '~/.rvm/rubies/ruby-2.0.0-p0/bin/ruby'
+
+" Deoplete
+if has('nvim')
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#keyword_patterns = {}
+  let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+endif
+
