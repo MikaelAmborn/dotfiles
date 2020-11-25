@@ -1,87 +1,66 @@
 set nocompatible
 filetype off
 
-" NeoBundle
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " My Bundles
-NeoBundle 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-rake'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'Lokaltog/vim-powerline'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
-NeoBundle 'slim-template/vim-slim'
-NeoBundle 'ervandew/supertab'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'skywind3000/asyncrun.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'morhetz/gruvbox'
-NeoBundle 'vim-scripts/dbext.vim'
-NeoBundle 'mhinz/vim-signify'
-"NeoBundle 'Shougo/unite.vim' " Try it on a faster computer
-" Clojure
-NeoBundle 'guns/vim-clojure-static'
-NeoBundle 'tpope/vim-fireplace'
-NeoBundle 'cemerick/austin'
-NeoBundle 'guns/vim-sexp'
-NeoBundle 'tpope/vim-sexp-mappings-for-regular-people'
-" Elixir
-NeoBundle 'elixir-lang/vim-elixir'
-" Scala
-NeoBundle 'derekwyatt/vim-scala'
-"NeoBundle 'ktvoelker/sbt-vim'
-" Elm
-NeoBundle 'lambdatoast/elm.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-endwise'
+Plug 'nanotech/jellybeans.vim'
+Plug 'Lokaltog/vim-powerline'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'dense-analysis/ale'
+Plug 'vim-airline/vim-airline'
+Plug 'slim-template/vim-slim'
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
+Plug 'flazz/vim-colorschemes'
+Plug 'morhetz/gruvbox'
+Plug 'vim-scripts/dbext.vim'
+Plug 'mhinz/vim-signify'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'StanAngeloff/php.vim'
+Plug 'brooth/far.vim'
+Plug 'chrisbra/Colorizer'
 " Javascript
-NeoBundle 'othree/yajs.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'moll/vim-node'
-NeoBundle 'elzr/vim-json'
+Plug 'othree/yajs.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'moll/vim-node'
+Plug 'elzr/vim-json'
+Plug 'posva/vim-vue'
 
-NeoBundle 'tfnico/vim-gradle'
+Plug 'tfnico/vim-gradle'
 
 if !has('nvim')
-  NeoBundle 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
-  NeoBundle 'skywind3000/asyncrun.vim'
-  NeoBundle 'Shougo/neocomplete.vim'
-  NeoBundle 'tpope/vim-sensible'
+  Plug 'Shougo/vimproc.vim', {'build' : {'mac' : 'make -f make_mac.mak' } }
+  Plug 'skywind3000/asyncrun.vim'
+  Plug 'Shougo/neocomplete.vim'
+  Plug 'tpope/vim-sensible'
 endif
 " Neovim only plugins
 if has('nvim')
-  NeoBundle 'Shougo/deoplete.nvim'
-  NeoBundle 'clojure-vim/async-clj-omni'
-  NeoBundle 'neovim/node-host'
-  NeoBundle 'roxma/nvim-completion-manager'
-  NeoBundle 'snoe/nvim-parinfer.js'
-  "NeoBundle 'snoe/clj-refactor.nvim'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'neovim/node-host'
+  Plug 'roxma/nvim-completion-manager'
+  Plug 'snoe/nvim-parinfer.js'
+  "Plug 'snoe/clj-refactor.nvim'
 endif
 
-call neobundle#end()
-
-syntax enable
-filetype plugin indent on
+" Initialize plugin system
+call plug#end()
 
 " git signify
 let g:signify_vcs_list = [ 'git' ]
 nmap <leader>gj <plug>(signify-next-hunk)
 nmap <leader>gk <plug>(signify-prev-hunk)
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
 
 let mapleader = ","
 
@@ -95,6 +74,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" fzf to open files with ctrl-p
+nnoremap <C-p> :Files<Cr>
+
 
 " Show extra whitespace
 set list listchars=tab:\|_,trail:·,extends:>,precedes:<
@@ -140,6 +123,8 @@ nnoremap <C-å> <C-]>
 au SwapExists * let v:swapchoice = 'e'
 " treat .es6 as .js
 au BufNewFile,BufRead *.es6 set filetype=javascript
+" Allow jsx in files ending with .js
+let g:jsx_ext_required = 0
 
 set background=dark
 " colorscheme my-rails-casts
@@ -155,6 +140,18 @@ set hidden
 
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+" Syntastic vvv
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'eslint --'
+" Syntastic ^^^
 
 " clear previous search with ,<space>
 nnoremap <leader><space> :noh<cr>
@@ -164,19 +161,6 @@ nnoremap <leader><space> :noh<cr>
 " make j and k work on file lines
 nnoremap j gj
 nnoremap k gk
-
-" Ag
-if executable('ag')
-  " use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-  " use ag in CtrlP for listing files
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough to CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|botright cwindow|redraw!
-
-nnoremap <leader>a :Ag
 
 "map leader c to close quickfix window
 nnoremap <leader>cc :ccl<CR>
@@ -219,11 +203,8 @@ set wildmode=longest,list:longest
 set splitright
 set splitbelow
 
-nnoremap <leader>cr :CoffeeRun<cr>
-vnoremap <leader>cr :CoffeeRun<cr>
-
 " Run file with rspec using tpope's Dispatch plugin
-nnoremap <leader>r :Dispatch rspec %<cr>
+nnoremap <leader>r :Dispatch rspec --color %<cr>
 
 " NERDTree
 nmap <leader>n :NERDTreeToggle<CR>
@@ -241,3 +222,68 @@ if has('nvim')
   let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 endif
 
+" Set specific linters
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'ruby': ['rubocop'],
+\}
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1 
+let g:airline#extensions#ale#enabled = 1 
+
+" Test helpers from Gary Bernhardt's screen cast:
+" https://www.destroyallsoftware.com/screencasts/catalog/file-navigation-in-vim
+" https://www.destroyallsoftware.com/file-navigation-in-vim.html
+function! RunTests(filename)
+    " Write the file and run tests for the given filename
+    :w
+    :silent !echo;echo;echo;echo;echo
+    exec ":!time rspec --color " . a:filename
+endfunction
+
+function! SetTestFile()
+    " Set the spec file that tests will be run for.
+    let t:grb_test_file=@%
+endfunction
+
+function! RunTestFile(...)
+    if a:0
+        let command_suffix = a:1
+    else
+        let command_suffix = ""
+    endif
+
+    " Run the tests for the previously-marked file.
+    let in_spec_file = match(expand("%"), '_spec.rb$') != -1
+    if in_spec_file
+        call SetTestFile()
+    elseif !exists("t:grb_test_file")
+        return
+    end
+    call RunTests(t:grb_test_file . command_suffix)
+endfunction
+
+function! RunNearestTest()
+    let spec_line_number = line('.')
+    call RunTestFile(":" . spec_line_number)
+endfunction
+
+" Run this file
+map <leader>m :call RunTestFile()<cr>
+" Run only the example under the cursor
+map <leader>. :call RunNearestTest()<cr>
+" Run all test files
+map <leader>A :call RunTests('spec')<cr>
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+  \   <bang>0)
+nnoremap <C-g> :Rg<Cr>
+" ¸ = <Alt-g> on my mac
+nnoremap ¸ :Rg <C-R><C-W><Cr>
+
+" Highlight colors in hex and rgb in css, scss, html and php files
+let g:colorizer_auto_filetype='css,scss,html,php'
